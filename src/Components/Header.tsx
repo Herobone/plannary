@@ -72,7 +72,7 @@ export class Header extends Component<HeaderProps, HeaderState> {
                         <Link to="/" className="w3-bar-item w3-button w3-padding-large w3-theme-d4" onClick={this.closeNav}>
                             <img src={Mascot} className="logo-header" alt="Logo" />
                             {" "}
-                            Lapislar
+                            Plannery
                         </Link>
                         {/*<a href="#" className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i className="fa fa-globe"></i></a>
                         <a href="#" className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i className="fa fa-user"></i></a>

@@ -113,9 +113,9 @@ export class Routed extends Component<Props, State> {
                     }
 
                     {
-                        currentUser &&
+                        (currentUser &&
                         (currentUser.displayName === null ||
-                            currentUser.displayName.length <= 0) &&
+                            currentUser.displayName.length <= 0)) &&
                         <Redirect to="/login" />
                     }
 
