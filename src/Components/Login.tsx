@@ -22,7 +22,8 @@ export class Login extends Component<Props> {
         signInOptions: [
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.GithubAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.PhoneAuthProvider.PROVIDER_ID
         ],
         callbacks: {
             // Avoid redirects after sign-in.
