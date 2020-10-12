@@ -23,18 +23,8 @@ import { CookiesProvider } from 'react-cookie';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCCA7YeJ4NSO_mOMgk2f5YNDpQMfOufLxM",
-    authDomain: "plannery-school-planner.firebaseapp.com",
-    databaseURL: "https://plannery-school-planner.firebaseio.com",
-    projectId: "plannery-school-planner",
-    storageBucket: "plannery-school-planner.appspot.com",
-    messagingSenderId: "918312517223",
-    appId: "1:918312517223:web:bb168f8d866a094ac75ec2",
-    measurementId: "G-KE7K8FKF41"
-};
-firebase.initializeApp(firebaseConfig);
+import * as config from './helper/config'
+firebase.initializeApp(config.firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>

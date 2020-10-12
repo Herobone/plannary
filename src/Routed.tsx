@@ -102,6 +102,7 @@ export class Routed extends Component<Props, State> {
 
     render() {
         const currentUser = firebase.auth().currentUser;
+        console.log("Username is " + currentUser?.displayName)
         return (
 
             <Router>
@@ -115,6 +116,7 @@ export class Routed extends Component<Props, State> {
                     {
                         (currentUser &&
                         (currentUser.displayName === null ||
+                            currentUser.displayName === "undefined" ||
                             currentUser.displayName.length <= 0)) &&
                         <Redirect to="/login" />
                     }

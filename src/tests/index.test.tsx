@@ -17,10 +17,23 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 import LanguageContainer from '../translations/LanguageContainer';
+import { CookiesProvider } from 'react-cookie';
+import * as config from '../helper/config'
 
-test('renders learn react link', () => {
-  const { getByText } = render(<LanguageContainer />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+firebase.initializeApp(config.firebaseConfig);
+
+test('Renders the Language Container', () => {
+  //const { getByText } = render(<LanguageContainer />);
+  //const linkElement = getByText(/learn react/i);
+  //expect(linkElement).toBeInTheDocument();
+  render(
+    <React.StrictMode>
+      <CookiesProvider>
+          <LanguageContainer />
+      </CookiesProvider>
+    </React.StrictMode>
+  );
 });

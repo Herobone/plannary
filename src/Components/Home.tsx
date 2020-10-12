@@ -50,7 +50,7 @@ class Home extends React.Component<Props> {
               <Redirect to="/login" />
             }
             <Column additionalClasses="w3-quarter">
-              <h4 className="w3-center">{userName}</h4>
+              <h4 className="w3-center"><b><u><FormattedMessage id="time.today" /></u></b></h4>
               <p className="w3-center"><img src={profilePicture} className="w3-circle" style={{ "height": "106px", "width": "106px" }} alt="Avatar" /></p>
               My Profile
             </Column>
