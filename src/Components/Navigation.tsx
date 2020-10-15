@@ -55,24 +55,13 @@ export class Header extends Component<HeaderProps, HeaderState> {
         if (user && user.photoURL) {
             profilePicture = user.photoURL;
         }
-        let userName = "Logged Out";
-        if (user && user.displayName) {
-            userName = user.displayName;
-        }
         return (
             <div>
-                <div className="w3-top">
-                    <div className="w3-bar w3-theme-d2 w3-left-align w3-xlarge">
-                        <button
-                            className="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-theme-d2"
-                            onClick={this.toggleNav}
-                        >
-                            <i className="fa fa-bars"></i>
-                        </button>
-                        <Link to="/" className="w3-bar-item w3-button w3-padding-large w3-theme-d4" onClick={this.closeNav}>
+                <div className="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+                    <div className="w3-theme-d2">
+                        <Link to="/" className="w3-bar-item w3-button w3-padding-large w3-theme-d4 w3-left" onClick={this.closeNav}>
                             <img src={Mascot} className="logo-header" alt="Logo" />
-                            {" "}
-                            Plannery
+                            <p>Plannery</p>
                         </Link>
                         {/*<a href="#" className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i className="fa fa-globe"></i></a>
                         <a href="#" className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i className="fa fa-user"></i></a>
@@ -85,32 +74,18 @@ export class Header extends Component<HeaderProps, HeaderState> {
                                 <a href="#" className="w3-bar-item w3-button">Jane likes your post</a>
                             </div>
                         </div>*/}
-                        <div className="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white w3-dropdown-hover" title="Account">
+                        <Link to="/settings" className="w3-bar-item w3-button w3-padding-large w3-hover-white w3-left" title="Account">
                             <img src={profilePicture} className="w3-circle app-profile-avatar-header" alt="Avatar" />
-
-                            <div className="w3-dropdown-content w3-card-4 w3-bar-block app-header-compensate-large" style={{ "width": "300px", "right": 0 }}>
-                                {
-                                    user &&
-                                    <span>
-                                        <div className="w3-bar-item">{userName}</div>
-                                        <Link to="/settings" className="w3-bar-item w3-button">
-                                            <FormattedMessage id="account.navigation.settings" />
-                                        </Link>
-                                        <button className="w3-bar-item w3-button w3-red" onClick={() => firebase.auth().signOut()}>
-                                            <FormattedMessage id="account.actions.logout" />
-                                        </button>
-                                    </span>
-                                }
-                                {
-                                    !user &&
-                                    <Link to="/login" className="w3-bar-item w3-button">
-                                        <FormattedMessage id="account.actions.login" />
-                                    </Link>
-                                }
-                            </div>
-
-                        </div>
+                        </Link>
                     </div>
+                </div>
+                <div className="w3-top w3-bar w3-theme-d2 w3-left-align w3-hide-large w3-hide-medium">
+                    <button
+                        className="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-left w3-padding-large w3-hover-white w3-theme-d2 w3-large"
+                        onClick={this.toggleNav}
+                    >
+                        <i className="fa fa-bars"></i>
+                    </button>
                 </div>
                 <div
                     id="mobileNav"

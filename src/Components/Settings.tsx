@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import Column from './Column';
 import Dropdown from './Dropdown';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -34,6 +37,10 @@ export class Settings extends Component<Props> {
                 <h5><FormattedMessage id="settings.labels.selectlanguage" /></h5>
                 <Dropdown callback={this.props.changeLanguage} content={options} selected={this.props.currentLocale} />
                 <hr />
+                <br />
+                <Link to="/login" className="w3-bar-item w3-button w3-red" onClick={() => firebase.auth().signOut()}>
+                    <FormattedMessage id="account.actions.logout" />
+                </Link>
             </Column>
         )
     }

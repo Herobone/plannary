@@ -5,7 +5,7 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
-import Header from "./Components/Header"
+import Header from "./Components/Navigation"
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import Settings from './Components/Settings';
@@ -107,7 +107,7 @@ export class Routed extends Component<Props, State> {
 
             <Router>
                 <Header user={currentUser} />
-                <div className="w3-container w3-content app-content">
+                <div className="w3-container w3-content app-content" id="main">
                     {
                         this.state.errorToDisplay !== null &&
                         this.state.errorToDisplay

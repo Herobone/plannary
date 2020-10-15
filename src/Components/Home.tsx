@@ -58,14 +58,14 @@ class Home extends React.Component<Props> {
               <Link
                 to="/tag/create"
                 className="w3-button w3-round w3-xlarge w3-blue">
-                <FormattedMessage id="tags.navigation.create" />
+                <FormattedMessage id="general.placeholder" />
               </Link>
             </Column>
             <Column additionalClasses="w3-quarter w3-center">
               <Link
                 to="/tag/found"
                 className="w3-button w3-round w3-xlarge w3-teal">
-                <FormattedMessage id="tags.navigation.found" />
+                <FormattedMessage id="general.placeholder" />
               </Link>
             </Column>
             <Column additionalClasses="w3-quarter">
