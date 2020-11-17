@@ -13,6 +13,8 @@ import Home from './Components/Home';
 import Login from './Components/Login';
 import Alert from './Components/Alert';
 import * as Alerts from './helper/AlertTypes';
+import ContextMenu from './Components/ContextMenu';
+import { IfFirebaseUnAuthed } from '@react-firebase/auth'
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -20,9 +22,10 @@ interface Props {
 }
 
 interface State {
-    errorToDisplay: ReactElement | null;
+    errorToDisplay: Map<number, ReactElement>;
     locale: string;
     isSignedIn: boolean;
+    lastIndex: number;
 }
 
 export class Routed extends Component<Props, State> {
@@ -34,12 +37,19 @@ export class Routed extends Component<Props, State> {
         this.state = {
             locale: navigator.language,
             isSignedIn: false,
-            errorToDisplay: null
+            errorToDisplay: new Map<number, ReactElement>(),
+            lastIndex: 0
         }
         this.displayError = this.displayError.bind(this);
         this.createAlert = this.createAlert.bind(this);
         this.clearAlerts = this.clearAlerts.bind(this);
     }
+
+    standardContextMenu = {
+        "1": "Option One",
+        "2": "Option Two",
+        "3": "Option Three"
+    };
 
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
@@ -54,11 +64,13 @@ export class Routed extends Component<Props, State> {
     }
 
     displayError(err: ReactElement<Alert>) {
-        this.setState({ errorToDisplay: err })
+        const { errorToDisplay, lastIndex } = this.state;
+        errorToDisplay.set(lastIndex + 1, err);
+        this.setState({ errorToDisplay: errorToDisplay, lastIndex: lastIndex + 1 })
     }
 
     clearAlerts() {
-        this.setState({ errorToDisplay: null });
+        this.setState({ errorToDisplay: new Map<number, ReactElement>() });
     }
 
     createAlert(type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) {
@@ -91,35 +103,46 @@ export class Routed extends Component<Props, State> {
             }
         }
 
+        const { errorToDisplay, lastIndex } = this.state;
+        const alertIndex = lastIndex + 1;
         const al = (
-            <Alert type={alertType} header={header} clear={this.clearAlerts}>
+            <Alert key={"alert" + alertIndex} type={alertType} header={header} clear={() => {
+                const { errorToDisplay } = this.state;
+                errorToDisplay.delete(alertIndex);
+                this.setState({ errorToDisplay: errorToDisplay });
+            }}>
                 {message}
             </Alert>
         )
-
-        this.setState({ errorToDisplay: al });
+        errorToDisplay.set(alertIndex, al);
+        this.setState({ errorToDisplay: errorToDisplay, lastIndex: alertIndex })
     }
 
     render() {
         const currentUser = firebase.auth().currentUser;
         console.log("Username is " + currentUser?.displayName)
+
+        let vals : ReactElement[] = [];
+        const fn = (val: ReactElement, k: number, m: Map<number, ReactElement>) => {
+            vals.push(val)
+        }
+        this.state.errorToDisplay.forEach(fn);
+
         return (
 
             <Router>
                 <Header user={currentUser} />
-                <div className="w3-container w3-content app-content" id="main">
-                    {
-                        this.state.errorToDisplay !== null &&
-                        this.state.errorToDisplay
-                    }
-
-                    {
-                        (currentUser &&
-                        (currentUser.displayName === null ||
-                            currentUser.displayName === "undefined" ||
-                            currentUser.displayName.length <= 0)) &&
-                        <Redirect to="/login" />
-                    }
+                <div className="w3-container w3-content">
+                    <div>
+                        {vals}
+                    </div>
+                    <IfFirebaseUnAuthed>
+                        {({ isSignedIn, user, providerId }) => {
+                            return (
+                                <Redirect to="/login" />
+                            );
+                        }}
+                    </IfFirebaseUnAuthed>
 
                     <Switch>
                         <Route path="/login">
@@ -131,11 +154,11 @@ export class Routed extends Component<Props, State> {
                         </Route>
 
                         <Route path="/">
-                            <Home user={currentUser} />
+                            <Home createAlert={this.createAlert} user={currentUser} />
                         </Route>
-
                     </Switch>
                 </div>
+                <ContextMenu content={this.standardContextMenu} callback={(lol: string) => console.log(lol)} />
             </Router >
         )
     }

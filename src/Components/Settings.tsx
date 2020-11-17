@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import ContextMenu from './ContextMenu';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -19,6 +20,12 @@ export class Settings extends Component<Props> {
         console.log("Changed to " + e.target.value)
     }
 
+    standardContextMenu = {
+        1: "Option Eins",
+        2: "Option Zwei",
+        3: "Option Drei"
+    };
+
     render() {
         const options = {
             "de": "Deutsch",
@@ -30,7 +37,7 @@ export class Settings extends Component<Props> {
             userName = currentUser.displayName;
         }
         return (
-            <Column>
+            <Column additionalClasses="app-content">
                 <h1><FormattedMessage id="account.navigation.settings" /></h1>
                 <h3>Hi {userName}!</h3>
                 <hr />
@@ -41,6 +48,7 @@ export class Settings extends Component<Props> {
                 <Link to="/login" className="w3-bar-item w3-button w3-red" onClick={() => firebase.auth().signOut()}>
                     <FormattedMessage id="account.actions.logout" />
                 </Link>
+                <ContextMenu content={this.standardContextMenu} callback={(lol: string) => console.log(lol)}/>
             </Column>
         )
     }

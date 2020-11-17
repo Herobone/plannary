@@ -15,14 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Lapislar.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import '../css/App.css';
 import Column from "./Column"
 import { Link, Redirect } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import * as Alerts from '../helper/AlertTypes';
 
 interface Props {
   user: firebase.User | null;
+  createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
 }
 
 class Home extends React.Component<Props> {
@@ -40,7 +42,7 @@ class Home extends React.Component<Props> {
     }
 
     return (
-      <div className="Home" >
+      <div className="Home app-content" >
         {
           currentUser &&
           <div className="w3-row-padding">
@@ -55,11 +57,11 @@ class Home extends React.Component<Props> {
               My Profile
             </Column>
             <Column additionalClasses="w3-quarter w3-center">
-              <Link
-                to="/tag/create"
+              <button
+                onClick={() => this.props.createAlert(1, "Hi")}
                 className="w3-button w3-round w3-xlarge w3-blue">
                 <FormattedMessage id="general.placeholder" />
-              </Link>
+              </button>
             </Column>
             <Column additionalClasses="w3-quarter w3-center">
               <Link

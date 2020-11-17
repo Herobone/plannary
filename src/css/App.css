@@ -61,22 +61,18 @@
   background: #222;
 }
 
+.hb-context-menu {
+  max-width: 30vw;
+}
 
-/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
-
-#main {
+.app-content {
   margin-left: 5vw;
 }
 
-
 /* Remove margins from "page content" on small screens */
-
 @media only screen and (max-width: 600px) {
-  #main {
-    margin-left: 0;
-  }
-
   .app-content {
     margin-top: 80px;
+    margin-left: 0;
   }
 }

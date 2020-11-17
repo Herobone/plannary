@@ -65,7 +65,7 @@ export class Dropdown extends Component<Props, State> {
             }
         }
         return (
-            <div className="w3-dropdown-click">
+            <div className="w3-block w3-black">
                 <button onClick={this.toggleDropdown} className="w3-button w3-black">
                     {this.state.selected !== null && this.state.selected}
                     {this.state.selected === null && <FormattedMessage id="elements.dropdown.select" />}
