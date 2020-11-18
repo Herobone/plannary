@@ -40,9 +40,7 @@ export class Routed extends Component<Props, State> {
             errorToDisplay: new Map<number, ReactElement>(),
             lastIndex: 0
         }
-        this.displayError = this.displayError.bind(this);
         this.createAlert = this.createAlert.bind(this);
-        this.clearAlerts = this.clearAlerts.bind(this);
     }
 
     standardContextMenu = {
@@ -61,16 +59,6 @@ export class Routed extends Component<Props, State> {
     // Make sure we un-register Firebase observers when the component unmounts.
     componentWillUnmount() {
         this.unregisterAuthObserver();
-    }
-
-    displayError(err: ReactElement<Alert>) {
-        const { errorToDisplay, lastIndex } = this.state;
-        errorToDisplay.set(lastIndex + 1, err);
-        this.setState({ errorToDisplay: errorToDisplay, lastIndex: lastIndex + 1 })
-    }
-
-    clearAlerts() {
-        this.setState({ errorToDisplay: new Map<number, ReactElement>() });
     }
 
     createAlert(type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) {
