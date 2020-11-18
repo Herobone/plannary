@@ -57,15 +57,19 @@ export class Header extends Component<HeaderProps, HeaderState> {
         }
         return (
             <div>
-                <nav className="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-                    <div className="w3-theme-d2">
-                        <Link to="/" className="w3-bar-item w3-button w3-padding-large w3-theme-d4 w3-left" onClick={this.closeNav}>
-                            <img src={Mascot} className="logo-header" alt="Logo" />
-                            <p>Plannery</p>
-                        </Link>
-                        <Link to="/settings" className="w3-bar-item w3-button w3-padding-large w3-hover-white w3-left" title="Account">
-                            <img src={profilePicture} className="w3-circle app-profile-avatar-header" alt="Avatar" />
-                        </Link>
+                <nav className="sidebar w3-theme-d2">
+                    <Link to="/" className="logo-header" onClick={this.closeNav}>
+                        <img src={Mascot} className="logo-header" alt="Logo" />
+                    </Link>
+                    <div className="user-section-sidebar">
+                        <div className="inner-user-sidebar">
+                            <Link to="/settings" className="user-settings-sidebar" title="Account">
+                                <img src={profilePicture} className="user-image-sidebar" alt="Avatar" />
+                            </Link>
+                            <div className="username-sidebar">
+                                {user?.displayName}
+                            </div>
+                        </div>
                     </div>
                 </nav>
                 <div className="w3-top w3-bar w3-theme-d2 w3-left-align w3-hide-large w3-hide-medium">

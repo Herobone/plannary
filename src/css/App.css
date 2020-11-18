@@ -18,14 +18,47 @@
  */
 
 .logo-header {
+  height: 66px;
+  width: 66px;
   border-radius: 0% 0% 50% 50%;
-  height: 1.5em;
-  width: 1.5em;
+  background-size: auto;
+  background-size: 100%;
+  overflow: visible;
 }
 
-.app-profile-avatar-header {
-  height: 2vw;
-  width: 2vw;
+.user-section-sidebar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #2b2b2b;
+}
+
+.user-settings-sidebar {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  margin: 0 auto;
+  transition: all .3s ease-in-out;
+}
+
+.inner-user-sidebar {
+  position: relative;
+  display: block;
+  outline: none;
+  z-index: 0;
+}
+
+.username-sidebar {
+  padding: 6px 0 8px;
+  text-align: center;
+}
+
+.user-image-sidebar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin-left: 8px;
+  border-radius: 50%;
 }
 
 .app-header-compensate {
@@ -56,9 +89,28 @@
 
 /* Set the width of the sidebar to 120px */
 
-.w3-sidebar {
-  width: 5vw;
-  background: #222;
+.sidebar {
+  position: absolute;
+  left: 0;
+  width: 66px;
+  height: 100%;
+  background: #2b2b2b;
+  z-index: 500;
+  color: #fff;
+  font-size: 10px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.sidebar-element {
+  width: 42px;
+  margin: 16px 12px;
+  padding: 6px 0;
+  display: block;
+  color: #fff;
+  outline: 0 none;
 }
 
 .hb-context-menu {
@@ -66,10 +118,13 @@
 }
 
 .app-content {
+  margin-top: 20px;
   margin-left: 5vw;
 }
 
+
 /* Remove margins from "page content" on small screens */
+
 @media only screen and (max-width: 600px) {
   .app-content {
     margin-top: 80px;
