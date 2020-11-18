@@ -1,5 +1,5 @@
 import React, { Component, ReactElement } from 'react'
-import * as Alerts from '../helper/AlertTypes'
+import * as Alerts from '../../helper/AlertTypes'
 import { FormattedMessage } from 'react-intl'
 
 interface Props {

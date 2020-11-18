@@ -1,20 +1,20 @@
-import "../css/App.css"
+import "../../css/App.css"
 import React, { Component } from 'react'
-import Mascot from "../media/MascottAlpha.png"
+import Mascot from "../../media/MascottAlpha.png"
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-interface HeaderProps {
+interface NaviagationProps {
     user: firebase.User | null
 }
 
-interface HeaderState {
+interface NaviagationState {
 
 }
 
-export class Header extends Component<HeaderProps, HeaderState> {
+export class Naviagation extends Component<NaviagationProps, NaviagationState> {
 
     mobileNavRef: React.RefObject<HTMLDivElement>;
 
@@ -56,10 +56,10 @@ export class Header extends Component<HeaderProps, HeaderState> {
             profilePicture = user.photoURL;
         }
         return (
-            <div>
+            <div className="navigation-provider">
                 <nav className="sidebar w3-theme-d2">
-                    <Link to="/" className="logo-header" onClick={this.closeNav}>
-                        <img src={Mascot} className="logo-header" alt="Logo" />
+                    <Link to="/" className="logo-sidebar" onClick={this.closeNav}>
+                        <img src={Mascot} className="logo-sidebar" alt="Logo" />
                     </Link>
                     <div className="user-section-sidebar">
                         <div className="inner-user-sidebar">
@@ -117,4 +117,4 @@ export class Header extends Component<HeaderProps, HeaderState> {
     }
 }
 
-export default Header
+export default Naviagation

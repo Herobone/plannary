@@ -16,11 +16,13 @@
 // along with Lapislar.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { ReactElement } from 'react';
-import '../css/App.css';
-import Column from "./Column"
+import '../../css/App.css';
+import Column from "../Visuals/Column"
 import { Link, Redirect } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import * as Alerts from '../helper/AlertTypes';
+import * as Alerts from '../../helper/AlertTypes';
+import ContextMenu from '../Visuals/ContextMenu';
+import OnlyAuthed from '../Functional/OnlyAuthed';
 
 interface Props {
   user: firebase.User | null;
@@ -29,6 +31,16 @@ interface Props {
 
 class Home extends React.Component<Props> {
   // The component's Local state.
+
+  prepareContextMenu() : Map<number, string> {
+    const menu : Map<number, string> = new Map<number, string>();
+
+    menu.set(0, "contextmenu.home.schedule");
+    menu.set(1, "contextmenu.home.calender");
+    menu.set(2, "contextmenu.home.exams");
+
+    return menu;
+  }
 
   render() {
     const currentUser = this.props.user;
@@ -42,7 +54,7 @@ class Home extends React.Component<Props> {
     }
 
     return (
-      <div className="Home app-content" >
+      <OnlyAuthed className="w3-container w3-content Home app-content" >
         {
           currentUser &&
           <div className="w3-row-padding">
@@ -77,7 +89,8 @@ class Home extends React.Component<Props> {
             </Column>
           </div>
         }
-      </div>
+        <ContextMenu content={this.prepareContextMenu()} callback={(lol: number) => console.log(lol)}/>
+      </OnlyAuthed>
     );
   }
 }

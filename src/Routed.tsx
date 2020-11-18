@@ -5,16 +5,13 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
-import Header from "./Components/Navigation"
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import Settings from './Components/Settings';
-import Home from './Components/Home';
-import Login from './Components/Login';
-import Alert from './Components/Alert';
+import Settings from './Components/Sites/Settings';
+import Home from './Components/Sites/Home';
 import * as Alerts from './helper/AlertTypes';
-import ContextMenu from './Components/ContextMenu';
-import { IfFirebaseUnAuthed } from '@react-firebase/auth'
+import Alert from './Components/Visuals/Alert';
+import Login from './Components/Sites/Login';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -42,12 +39,6 @@ export class Routed extends Component<Props, State> {
         }
         this.createAlert = this.createAlert.bind(this);
     }
-
-    standardContextMenu = {
-        "1": "contextmenu.text.schedule",
-        "2": "contextmenu.text.calender",
-        "3": "contextmenu.text.exams"
-    };
 
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
@@ -106,47 +97,41 @@ export class Routed extends Component<Props, State> {
         this.setState({ errorToDisplay: errorToDisplay, lastIndex: alertIndex })
     }
 
-    render() {
-        const currentUser = firebase.auth().currentUser;
-        console.log("Username is " + currentUser?.displayName)
-
-        let vals : ReactElement[] = [];
+    prepareAlerts(): ReactElement[] {
+        let vals: ReactElement[] = [];
         const fn = (val: ReactElement, k: number, m: Map<number, ReactElement>) => {
             vals.push(val)
         }
         this.state.errorToDisplay.forEach(fn);
+        return vals;
+    }
+
+    render() {
+        const currentUser = firebase.auth().currentUser;
 
         return (
 
             <Router>
-                <Header user={currentUser} />
                 <div className="w3-container w3-content">
-                    <div>
-                        {vals}
+                    <div className="alert-area">
+                        {this.prepareAlerts()}
                     </div>
-                    <IfFirebaseUnAuthed>
-                        {({ isSignedIn, user, providerId }) => {
-                            return (
-                                <Redirect to="/login" />
-                            );
-                        }}
-                    </IfFirebaseUnAuthed>
-
-                    <Switch>
-                        <Route path="/login">
-                            <Login createAlert={this.createAlert} />
-                        </Route>
-
-                        <Route path="/settings">
-                            <Settings changeLanguage={this.props.changeLanguage} currentLocale={this.props.currentLocale} user={currentUser} />
-                        </Route>
-
-                        <Route path="/">
-                            <Home createAlert={this.createAlert} user={currentUser} />
-                        </Route>
-                    </Switch>
                 </div>
-                <ContextMenu content={this.standardContextMenu} callback={(lol: string) => console.log(lol)} />
+                {!this.state.isSignedIn && <Redirect to="/login" />}
+
+                <Switch>
+                    <Route path="/login">
+                        <Login createAlert={this.createAlert} />
+                    </Route>
+
+                    <Route path="/settings">
+                        <Settings changeLanguage={this.props.changeLanguage} currentLocale={this.props.currentLocale} user={currentUser} />
+                    </Route>
+
+                    <Route path="/">
+                        <Home createAlert={this.createAlert} user={currentUser} />
+                    </Route>
+                </Switch>
             </Router >
         )
     }

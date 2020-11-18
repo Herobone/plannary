@@ -4,7 +4,7 @@ import 'firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import { Redirect } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import * as Alerts from "../helper/AlertTypes";
+import * as Alerts from "../../helper/AlertTypes";
 
 interface Props {
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
@@ -20,7 +20,13 @@ export class Login extends Component<Props> {
         signInFlow: 'popup',
         // We will display Google and Facebook as auth providers.
         signInOptions: [
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            {
+                provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                scopes: [
+                    "https://www.googleapis.com/auth/calendar.events",
+                    "https://www.googleapis.com/auth/calendar.readonly"
+                ]
+            },
             firebase.auth.GithubAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
             firebase.auth.PhoneAuthProvider.PROVIDER_ID
@@ -58,7 +64,15 @@ export class Login extends Component<Props> {
     render() {
         const currentUser = firebase.auth().currentUser;
         return (
-            <div>
+            <div className="login-page">
+                <h1 className="w3-center">
+                    <FormattedMessage id="general.welcome" />!
+                    <br />
+                </h1>
+                <h3 className="w3-center">
+                    <FormattedMessage id="account.descriptors.signinneeded" />
+                </h3>
+
                 {
                     !currentUser &&
                     <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />

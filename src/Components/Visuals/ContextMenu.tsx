@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, ReactElement } from 'react'
 import { FormattedMessage } from 'react-intl';
 
 
 interface Props {
-    content: { [key: string]: string };
-    callback: (value: string) => void;
+    content: Map<number, string>;
+    callback: (value: number) => void;
 }
 interface State {
 
@@ -36,7 +36,7 @@ class ContextMenu extends Component<Props, State> {
         if (this.state.showMenu) this.setState({ showMenu: false });
     }
 
-    handleContextMenuClick(e: string, element: string) {
+    handleContextMenuClick(e: number, element: string) {
         this.props.callback(e);
         this.setState({
             selected: element
@@ -56,13 +56,10 @@ class ContextMenu extends Component<Props, State> {
     render() {
         const { showMenu, yPos, xPos } = this.state;
         if (showMenu) {
-            let vals = [];
-            for (const key in this.props.content) {
-                if (this.props.content.hasOwnProperty(key)) {
-                    const element = this.props.content[key];
-                    vals.push(<li key={key} onClick={() => this.handleContextMenuClick(key, element)} className="w3-bar-item w3-button"><FormattedMessage id={element} /></li>)
-                }
-            }
+            let vals : ReactElement[] = [];
+            this.props.content.forEach((element: string, key: number, m: Map<number, string>) => {
+                vals.push(<li key={key} onClick={() => this.handleContextMenuClick(key, element)} className="w3-bar-item w3-button"><FormattedMessage id={element} /></li>)
+            })
             return (
                 <ul
                     className="w3-block w3-black w3-dropdown-content w3-bar-block w3-border hb-context-menu"
