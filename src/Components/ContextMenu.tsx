@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl';
+
 
 interface Props {
     content: { [key: string]: string };
@@ -58,7 +60,7 @@ class ContextMenu extends Component<Props, State> {
             for (const key in this.props.content) {
                 if (this.props.content.hasOwnProperty(key)) {
                     const element = this.props.content[key];
-                    vals.push(<li key={key} onClick={() => this.handleContextMenuClick(key, element)} className="w3-bar-item w3-button">{element}</li>)
+                    vals.push(<li key={key} onClick={() => this.handleContextMenuClick(key, element)} className="w3-bar-item w3-button"><FormattedMessage id={element} /></li>)
                 }
             }
             return (

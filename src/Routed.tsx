@@ -44,9 +44,9 @@ export class Routed extends Component<Props, State> {
     }
 
     standardContextMenu = {
-        "1": "Option One",
-        "2": "Option Two",
-        "3": "Option Three"
+        "1": "contextmenu.text.schedule",
+        "2": "contextmenu.text.calender",
+        "3": "contextmenu.text.exams"
     };
 
     // Listen to the Firebase Auth state and set the local state.
