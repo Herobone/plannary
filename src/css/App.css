@@ -91,7 +91,7 @@
 /* Set the width of the sidebar to 120px */
 
 .sidebar {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 66px;
@@ -106,6 +106,8 @@
   user-select: none;
 }
 
+
+
 .sidebar-element {
   width: 42px;
   margin: 16px 12px;
@@ -113,6 +115,15 @@
   display: block;
   color: #fff;
   outline: 0 none;
+}
+
+.sidebar-element.far {
+  margin: 16px 16px;
+  font-size: 36px;
+}
+
+.sidebar-element.far:first-child {
+  margin-top: 10px;
 }
 
 .hb-context-menu {
