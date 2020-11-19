@@ -22,7 +22,7 @@ export class Login extends Component<Props> {
     // Configure FirebaseUI.
     uiConfig = {
         // Popup signin flow rather than redirect flow.
-        signInFlow: 'popup',
+        signInFlow: 'redirect',
         // We will display Google and Facebook as auth providers.
         signInOptions: [
             {
