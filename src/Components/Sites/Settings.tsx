@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactElement } from 'react'
 import Column from '../Visuals/Column';
 import Dropdown from '../Visuals/Dropdown';
 import * as firebase from 'firebase/app';
@@ -7,11 +7,13 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import ContextMenu from '../Visuals/ContextMenu';
 import OnlyAuthed from '../Functional/OnlyAuthed';
+import * as Alerts from '../../helper/AlertTypes';
 
 interface Props {
     changeLanguage: (locale: string) => void;
     currentLocale: string;
     user: firebase.User | null;
+    createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
 }
 
 export class Settings extends Component<Props> {

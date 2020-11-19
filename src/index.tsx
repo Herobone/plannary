@@ -23,8 +23,8 @@ import { CookiesProvider } from 'react-cookie';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import * as config from './helper/config'
-firebase.initializeApp(config.firebaseConfig);
+import config from './helper/config'
+firebase.initializeApp(config);
 
 ReactDOM.render(
   <React.StrictMode>

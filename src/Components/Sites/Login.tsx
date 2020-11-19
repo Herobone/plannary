@@ -5,6 +5,9 @@ import { StyledFirebaseAuth } from 'react-firebaseui';
 import { Redirect } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import * as Alerts from "../../helper/AlertTypes";
+import { useCookies } from 'react-cookie';
+
+import config from '../../helper/config'
 
 interface Props {
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
@@ -14,6 +17,8 @@ export class Login extends Component<Props> {
 
     nameInputRef!: React.RefObject<HTMLInputElement>;
 
+
+
     // Configure FirebaseUI.
     uiConfig = {
         // Popup signin flow rather than redirect flow.
@@ -22,10 +27,7 @@ export class Login extends Component<Props> {
         signInOptions: [
             {
                 provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                scopes: [
-                    "https://www.googleapis.com/auth/calendar.events",
-                    "https://www.googleapis.com/auth/calendar.readonly"
-                ]
+                scopes: config.scopes
             },
             firebase.auth.GithubAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -33,7 +35,12 @@ export class Login extends Component<Props> {
         ],
         callbacks: {
             // Avoid redirects after sign-in.
-            signInSuccessWithAuthResult: () => false
+            signInSuccessWithAuthResult: (result: any) => {
+                if (result.credential.accessToken) {
+                    console.log("GToken " + result.credential.accessToken)
+                }
+                return false;
+            }
         }
     };
 
