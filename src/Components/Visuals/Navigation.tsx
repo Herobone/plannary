@@ -57,7 +57,7 @@ export class Naviagation extends Component<NaviagationProps, NaviagationState> {
         }
         return (
             <div className="navigation-provider">
-                <nav id="desktop-nav" className="sidebar w3-theme-d2">
+                <nav id="desktop-nav" className="sidebar w3-theme-d2 w3-hide-small">
                     <Link to="/" className="logo-sidebar" onClick={this.closeNav}>
                         <img src={Mascot} className="logo-sidebar" alt="Logo" />
                     </Link>
