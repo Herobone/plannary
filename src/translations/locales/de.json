@@ -22,5 +22,8 @@
 	"states.homework.overdue": "Überfällig",
 	"navigation.myprofile": "Mein Profil",
 	"navigation.startgame": "Spiel starten",
-	"settings.labels.selectlanguage": "Sprache (Language)"
+	"settings.labels.selectlanguage": "Sprache (Language)",
+	"contextmenu.home.exams": "Schulaufgaben",
+	"contextmenu.home.calender": "Kalender",
+	"contextmenu.home.schedule": "Stundenplan"
 }
