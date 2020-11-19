@@ -49,7 +49,7 @@ export class Routed extends Component<Props, State> {
             (user) => {
                 this.setState({ isSignedIn: !!user });
                 if (user) {
-                    var script = document.createElement('script');
+                    /*var script = document.createElement('script');
                     script.type = 'text/javascript';
                     script.src = 'https://apis.google.com/js/api.js';    // Once the Google API Client is loaded, you can run your code
                     script.onload = function (e) {     // Initialize the Google API Client with the config object
@@ -67,7 +67,7 @@ export class Routed extends Component<Props, State> {
                                 }
                             })
                     }    // Add to the document
-                    document.getElementsByTagName('head')[0].appendChild(script);
+                    document.getElementsByTagName('head')[0].appendChild(script);*/
                 }
             }
         );
