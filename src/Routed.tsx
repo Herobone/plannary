@@ -13,8 +13,8 @@ import * as Alerts from './helper/AlertTypes';
 import Alert from './Components/Visuals/Alert';
 import Login from './Components/Sites/Login';
 import Calender from './Components/Sites/Calender';
+
 import config from './helper/config'
-import {google} from 'googleapis';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -48,27 +48,24 @@ export class Routed extends Component<Props, State> {
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
             (user) => {
                 this.setState({ isSignedIn: !!user });
-                if (user) {
-                    /*var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = 'https://apis.google.com/js/api.js';    // Once the Google API Client is loaded, you can run your code
-                    script.onload = function (e) {     // Initialize the Google API Client with the config object
-                        google.client.init({
-                            apiKey: config.apiKey,
-                            clientId: config.clientId,
-                            discoveryDocs: config.discoveryDocs,
-                            scope: config.scopes.join(' '),
-                        })     // Loading is finished, so start the app
-                            .then(function () {      // Make sure the Google API Client is properly signed in
-                                if (google.auth2.getAuthInstance().isSignedIn.get()) {
-                                    startApp(user);
-                                } else {
-                                    firebase.auth().signOut(); // Something went wrong, sign out
-                                }
-                            })
-                    }    // Add to the document
-                    document.getElementsByTagName('head')[0].appendChild(script);*/
-                }
+                console.log("State chganged to: " + !!user);
+                gapi.load("client", () => {
+                    gapi.client.init({
+                        apiKey: config.apiKey,
+                        clientId: config.clientId,
+                        discoveryDocs: config.discoveryDocs,
+                        scope: config.scopes.join(' '),
+                    }).then(() => {      // Make sure the Google API Client is properly signed in
+                        console.log("Im in then!");
+                        if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+                            console.log("Authed!");
+                        } else {
+                            firebase.auth().signOut(); // Something went wrong, sign out
+                        }
+                    }, (error:any) => {
+                        console.log("Error cause: " + error.details)
+                    });
+                })
             }
         );
     }

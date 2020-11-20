@@ -5,8 +5,6 @@ import { StyledFirebaseAuth } from 'react-firebaseui';
 import { Redirect } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import * as Alerts from "../../helper/AlertTypes";
-import { useCookies } from 'react-cookie';
-
 import config from '../../helper/config'
 
 interface Props {
@@ -36,6 +34,7 @@ export class Login extends Component<Props> {
         callbacks: {
             // Avoid redirects after sign-in.
             signInSuccessWithAuthResult: (result: any) => {
+                console.log("Hi");
                 if (result.credential.accessToken) {
                     console.log("GToken " + result.credential.accessToken)
                 }
