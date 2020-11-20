@@ -5,9 +5,8 @@ import FullCalendar, { EventClickArg } from '@fullcalendar/react';
 import timeGridPlugin from "@fullcalendar/timegrid";
 import deLocale from '@fullcalendar/core/locales/de'
 import enLocale from '@fullcalendar/core/locales/en-gb'
-import { INITIAL_EVENTS, createEventId } from "./events";
+import { INITIAL_EVENTS} from "./events";
 import firebase from 'firebase';
-import {google} from 'googleapis';
 
 
 interface Props {
