@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
+    "types": ["gapi", "gapi.auth2"],
     "lib": [
       "dom",
       "dom.iterable",
