@@ -21,9 +21,9 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import LanguageContainer from '../translations/LanguageContainer';
 import { CookiesProvider } from 'react-cookie';
-import * as config from '../helper/config'
+import config from '../helper/config'
 
-firebase.initializeApp(config.firebaseConfig);
+firebase.initializeApp(config);
 
 test('Renders the Language Container', () => {
   //const { getByText } = render(<LanguageContainer />);

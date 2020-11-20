@@ -1,4 +1,4 @@
-export default {
+const config = {
     apiKey: "AIzaSyCCA7YeJ4NSO_mOMgk2f5YNDpQMfOufLxM",
     authDomain: "plannery-school-planner.firebaseapp.com",
     databaseURL: "https://plannery-school-planner.firebaseio.com",
@@ -18,3 +18,5 @@ export default {
         "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
     ]
 };
+
+export default config;
