@@ -45,7 +45,6 @@ export class Routed extends Component<Props, State> {
 
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
             (user) => {
                 this.setState({ isSignedIn: !!user });

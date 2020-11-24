@@ -24,6 +24,7 @@ import { CookiesProvider } from 'react-cookie';
 import config from '../helper/config'
 
 firebase.initializeApp(config);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
 
 test('Renders the Language Container', () => {
   //const { getByText } = render(<LanguageContainer />);
