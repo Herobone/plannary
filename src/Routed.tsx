@@ -45,27 +45,38 @@ export class Routed extends Component<Props, State> {
 
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
             (user) => {
                 this.setState({ isSignedIn: !!user });
                 console.log("State chganged to: " + !!user);
-                gapi.load("client", () => {
-                    gapi.client.init({
-                        apiKey: config.apiKey,
-                        clientId: config.clientId,
-                        discoveryDocs: config.discoveryDocs,
-                        scope: config.scopes.join(' '),
-                    }).then(() => {      // Make sure the Google API Client is properly signed in
-                        console.log("Im in then!");
-                        if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                            console.log("Authed!");
-                        } else {
-                            firebase.auth().signOut(); // Something went wrong, sign out
-                        }
-                    }, (error:any) => {
-                        console.log("Error cause: " + error.details)
+                console.log("User: ");
+                console.log(user);
+                if (user) {
+                    user.getIdToken(true).then((id: string) => {
+                        console.log("ID: " + id);
+                        gapi.load("client", () => {
+                            gapi.auth2.authorize({
+                                response_type: 'permission',
+                                client_id: config.clientId,
+                                scope: config.scopes.join(' '),
+                                login_hint: id,
+                                prompt: 'none'
+                            }, (response: gapi.auth2.AuthorizeResponse) => {
+                                gapi.client.init({
+                                    apiKey: config.apiKey,
+                                    clientId: config.clientId,
+                                    discoveryDocs: config.discoveryDocs,
+                                    scope: config.scopes.join(' '),
+                                }).then(() => {      // Make sure the Google API Client is properly signed in
+                                    console.log("Init sucessful!");
+                                }, (error: any) => {
+                                    console.log("Error cause: " + error.details)
+                                });
+                            });
+                        });
                     });
-                })
+                }
             }
         );
     }
@@ -140,7 +151,7 @@ export class Routed extends Component<Props, State> {
                         {this.prepareAlerts()}
                     </div>
                 </div>
-                {!this.state.isSignedIn && <Redirect to="/login" />}
+                {/*!this.state.isSignedIn && <Redirect to="/login" />*/}
 
                 <Switch>
                     <Route path="/login">

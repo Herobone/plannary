@@ -46,6 +46,7 @@ export default class Calender extends Component<Props, State> {
             idToken: idToken,
             gToken: cred.accessToken
         });
+        firebase.auth().signInWithCredential(cred).then(() => console.log("Sucess!")).catch((reason: any) => console.log(reason))
         console.log(cred.accessToken);
     }
 
@@ -61,6 +62,7 @@ export default class Calender extends Component<Props, State> {
                     selectable={true}
                     eventClick={this.handleEventClick}
                     initialEvents={INITIAL_EVENTS}
+                    height={"95vh"}
                 />
             </OnlyAuthed>
         )

@@ -12,6 +12,12 @@ export const INITIAL_EVENTS = [
     id: createEventId(),
     title: 'Timed event',
     start: todayStr + 'T12:00:00'
+  },
+  {
+    id: createEventId(),
+    title: "Hello from Yesterday",
+    start: "2020-11-20T12:00:00",
+    color: '#690420'
   }
 ]
 

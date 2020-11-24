@@ -49,6 +49,8 @@ export class Login extends Component<Props> {
         this.setName = this.setName.bind(this);
     }
 
+    
+
     setName() {
         const currentUser = firebase.auth().currentUser,
             input = this.nameInputRef.current;
