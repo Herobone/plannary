@@ -7,6 +7,7 @@ import deLocale from '@fullcalendar/core/locales/de'
 import enLocale from '@fullcalendar/core/locales/en-gb'
 import { INITIAL_EVENTS } from "./events";
 import firebase from 'firebase';
+import { Event } from '../../helper/calendarTypes'
 
 interface Props {
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
@@ -61,17 +62,19 @@ export default class Calender extends Component<Props, State> {
             console.log(events);
             if (events.length > 0) {
                 for (let i = 0; i < events.length; i++) {
-                    var event = events[i];
+                    var event: Event = events[i];
                     var when = event.start.dateTime;
                     if (!when) {
                         when = event.start.date;
                     }
-                    api?.addEvent({
-                        title: event.summary,
-                        editable: false,
-                        start: when,
-                        id: event.id
-                    })
+                    if (!api?.getEventById(event.id)) {
+                        api?.addEvent({
+                            title: event.summary,
+                            editable: false,
+                            start: when,
+                            id: event.id
+                        });
+                    }
                 }
             }
         })
@@ -82,11 +85,11 @@ export default class Calender extends Component<Props, State> {
     }
 
     render() {
-        const api = this.calendarRef.current?.getApi();
         const customs = {
             customprev: {
                 text: "<",
                 click: () => {
+                    const api = this.calendarRef.current?.getApi();
                     api?.prev();
                     this.getEvents(api?.view.currentStart, api?.view.currentEnd);
                 }
@@ -94,10 +97,9 @@ export default class Calender extends Component<Props, State> {
             customnext: {
                 text: ">",
                 click: () => {
-                    if (api) {
-                        api.next();
-                        this.getEvents(api.view.currentStart, api.view.currentEnd);
-                    }
+                    const api = this.calendarRef.current?.getApi();
+                    api?.next();
+                    this.getEvents(api?.view.currentStart, api?.view.currentEnd);
                 }
             }
         }

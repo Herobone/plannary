@@ -23,12 +23,6 @@ export const INITIAL_EVENTS = [
     title: "Hello from Yesterday",
     start: "2020-11-20T12:00:00",
     color: '#690420'
-  },
-  {
-    id: createEventId(),
-    title: "Just now",
-    start: toCompliantDate(new Date()),
-    color: '#690420'
   }
 ]
 
