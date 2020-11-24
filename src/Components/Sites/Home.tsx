@@ -32,8 +32,8 @@ interface Props {
 class Home extends React.Component<Props> {
   // The component's Local state.
 
-  prepareContextMenu() : Map<number, string> {
-    const menu : Map<number, string> = new Map<number, string>();
+  prepareContextMenu(): Map<number, string> {
+    const menu: Map<number, string> = new Map<number, string>();
 
     menu.set(0, "contextmenu.home.schedule");
     menu.set(1, "contextmenu.home.calender");
@@ -58,11 +58,6 @@ class Home extends React.Component<Props> {
         {
           currentUser &&
           <div className="w3-row-padding">
-            {
-              (currentUser.displayName === null ||
-                currentUser.displayName.length <= 0) &&
-              <Redirect to="/login" />
-            }
             <Column additionalClasses="w3-quarter">
               <h4 className="w3-center"><b><u><FormattedMessage id="time.today" /></u></b></h4>
               <p className="w3-center"><img src={profilePicture} className="w3-circle" style={{ "height": "106px", "width": "106px" }} alt="Avatar" /></p>
@@ -76,11 +71,14 @@ class Home extends React.Component<Props> {
               </button>
             </Column>
             <Column additionalClasses="w3-quarter w3-center">
-              <Link
-                to="/tag/found"
+              <button
+                onClick={() => {
+                  let user = gapi.auth2.getAuthInstance().currentUser.get();
+                  this.props.createAlert(1, "Hi " + user.getBasicProfile().getName());
+                }}
                 className="w3-button w3-round w3-xlarge w3-teal">
                 <FormattedMessage id="general.placeholder" />
-              </Link>
+              </button>
             </Column>
             <Column additionalClasses="w3-quarter">
               <h4 className="w3-center">{userName}</h4>
@@ -89,7 +87,7 @@ class Home extends React.Component<Props> {
             </Column>
           </div>
         }
-        <ContextMenu content={this.prepareContextMenu()} callback={(lol: number) => console.log(lol)}/>
+        <ContextMenu content={this.prepareContextMenu()} callback={(lol: number) => console.log(lol)} />
       </OnlyAuthed>
     );
   }

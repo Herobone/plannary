@@ -26,6 +26,7 @@ interface State {
     locale: string;
     isSignedIn: boolean;
     lastIndex: number;
+    gapiInitDone: boolean;
 }
 
 export class Routed extends Component<Props, State> {
@@ -38,9 +39,12 @@ export class Routed extends Component<Props, State> {
             locale: navigator.language,
             isSignedIn: false,
             errorToDisplay: new Map<number, ReactElement>(),
-            lastIndex: 0
+            lastIndex: 0,
+            gapiInitDone: false
         }
         this.createAlert = this.createAlert.bind(this);
+        this.initGAPI = this.initGAPI.bind(this);
+        this.initAuth2 = this.initAuth2.bind(this);
     }
 
     // Listen to the Firebase Auth state and set the local state.
@@ -48,36 +52,48 @@ export class Routed extends Component<Props, State> {
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
             (user) => {
                 this.setState({ isSignedIn: !!user });
-                console.log("State chganged to: " + !!user);
-                console.log("User: ");
-                console.log(user);
-                if (user) {
-                    user.getIdToken(true).then((id: string) => {
-                        console.log("ID: " + id);
-                        gapi.load("client", () => {
-                            gapi.auth2.authorize({
-                                response_type: 'permission',
-                                client_id: config.clientId,
-                                scope: config.scopes.join(' '),
-                                login_hint: id,
-                                prompt: 'none'
-                            }, (response: gapi.auth2.AuthorizeResponse) => {
-                                gapi.client.init({
-                                    apiKey: config.apiKey,
-                                    clientId: config.clientId,
-                                    discoveryDocs: config.discoveryDocs,
-                                    scope: config.scopes.join(' '),
-                                }).then(() => {      // Make sure the Google API Client is properly signed in
-                                    console.log("Init sucessful!");
-                                }, (error: any) => {
-                                    console.log("Error cause: " + error.details)
-                                });
-                            });
-                        });
-                    });
-                }
             }
         );
+
+        gapi.load("client:auth2", this.initGAPI);
+    }
+
+    initGAPI() {
+        gapi.client.init({
+            apiKey: config.apiKey,
+            clientId: config.clientId,
+            discoveryDocs: config.discoveryDocs,
+            scope: config.scopes.join(' '),
+        }).then(() => {      // Make sure the Google API Client is properly signed in
+            console.log("Init sucessful!");
+            this.setState({ gapiInitDone: true });
+        }, (error: any) => {
+            console.log("Error cause: " + error.details)
+            this.createAlert(3, error.details);
+        });
+
+        this.initAuth2();
+    }
+
+    initAuth2() {
+        const auth2 = gapi.auth2.getAuthInstance();
+        gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
+            if (isSignedIn) {
+                console.log("User was signed in!");
+                this.setState({ isSignedIn: isSignedIn });
+                const currentUser = auth2.currentUser.get()
+                const authResponse = currentUser.getAuthResponse(true)
+                const credential = firebase.auth.GoogleAuthProvider.credential(
+                    authResponse.id_token,
+                    authResponse.access_token
+                );
+                firebase.auth().signInWithCredential(credential);
+            } else {
+                console.log("User was signed out!");
+                firebase.auth().signOut();
+                this.createAlert(1, "Signed Out!");
+            }
+        });
     }
 
     // Make sure we un-register Firebase observers when the component unmounts.
@@ -143,33 +159,39 @@ export class Routed extends Component<Props, State> {
         const currentUser = firebase.auth().currentUser;
 
         return (
-
-            <Router>
+            <div>
                 <div className="w3-container w3-content">
                     <div className="alert-area">
                         {this.prepareAlerts()}
                     </div>
                 </div>
-                {/*!this.state.isSignedIn && <Redirect to="/login" />*/}
+                {this.state.gapiInitDone &&
+                    <div>
+                        Loading...
+                    </div>
+                }
+                {this.state.gapiInitDone &&
+                    <Router>
 
-                <Switch>
-                    <Route path="/login">
-                        <Login createAlert={this.createAlert} />
-                    </Route>
+                        <Switch>
+                            <Route path="/login">
+                                <Login createAlert={this.createAlert} />
+                            </Route>
 
-                    <Route path="/calendar">
-                        <Calender createAlert={this.createAlert} currentLocale={this.props.currentLocale} />
-                    </Route>
+                            <Route path="/calendar">
+                                <Calender createAlert={this.createAlert} currentLocale={this.props.currentLocale} />
+                            </Route>
 
-                    <Route path="/settings">
-                        <Settings changeLanguage={this.props.changeLanguage} currentLocale={this.props.currentLocale} user={currentUser} createAlert={this.createAlert} />
-                    </Route>
+                            <Route path="/settings">
+                                <Settings changeLanguage={this.props.changeLanguage} currentLocale={this.props.currentLocale} user={currentUser} createAlert={this.createAlert} />
+                            </Route>
 
-                    <Route path="/">
-                        <Home createAlert={this.createAlert} user={currentUser} />
-                    </Route>
-                </Switch>
-            </Router >
+                            <Route path="/">
+                                <Home createAlert={this.createAlert} user={currentUser} />
+                            </Route>
+                        </Switch>
+                    </Router >}
+            </div>
         )
     }
 }

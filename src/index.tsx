@@ -19,7 +19,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import LanguageContainer from './translations/LanguageContainer';
-import { CookiesProvider } from 'react-cookie';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -30,9 +29,7 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 ReactDOM.render(
   <React.StrictMode>
-    <CookiesProvider>
         <LanguageContainer />
-    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

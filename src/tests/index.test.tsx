@@ -32,9 +32,7 @@ test('Renders the Language Container', () => {
   //expect(linkElement).toBeInTheDocument();
   render(
     <React.StrictMode>
-      <CookiesProvider>
           <LanguageContainer />
-      </CookiesProvider>
     </React.StrictMode>
   );
 });
