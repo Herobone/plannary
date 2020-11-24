@@ -2,11 +2,6 @@
 let eventGuid = 0
 let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
-const toCompliantDate = (date: Date): string => {
-  let dateStr = date.toISOString();
-  return dateStr;
-}
-
 export const INITIAL_EVENTS = [
   {
     id: createEventId(),

@@ -6,7 +6,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import deLocale from '@fullcalendar/core/locales/de'
 import enLocale from '@fullcalendar/core/locales/en-gb'
 import { INITIAL_EVENTS } from "./events";
-import firebase from 'firebase';
 import { Event } from '../../helper/calendarTypes'
 
 interface Props {
@@ -72,7 +71,8 @@ export default class Calender extends Component<Props, State> {
                             title: event.summary,
                             editable: false,
                             start: when,
-                            id: event.id
+                            id: event.id,
+                            color: "#696900"
                         });
                     }
                 }
@@ -105,7 +105,7 @@ export default class Calender extends Component<Props, State> {
         }
 
         return (
-            <OnlyAuthed className="w3-container app-content" >
+            <OnlyAuthed className="w3-container app-content">
                 <FullCalendar
                     plugins={[timeGridPlugin]}
                     initialView="timeGridWeek"
