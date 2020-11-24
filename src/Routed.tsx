@@ -2,11 +2,9 @@ import React, { Component, ReactElement } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Redirect
+    Route
 } from "react-router-dom";
 import * as firebase from 'firebase/app';
-import 'firebase/auth';
 import Settings from './Components/Sites/Settings';
 import Home from './Components/Sites/Home';
 import * as Alerts from './helper/AlertTypes';
@@ -15,6 +13,7 @@ import Login from './Components/Sites/Login';
 import Calender from './Components/Sites/Calender';
 
 import config from './helper/config'
+import Schedule from './Components/Sites/Schedule';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -165,9 +164,11 @@ export class Routed extends Component<Props, State> {
                         {this.prepareAlerts()}
                     </div>
                 </div>
-                {this.state.gapiInitDone &&
-                    <div>
-                        Loading...
+                {!this.state.gapiInitDone &&
+                    <div className="w3-display-middle w3-xlarge">
+                        <span className="w3-center w3-padding-large">Loading</span>
+                        <br />
+                        <i className="w3-center fas fa-spinner fa-spin fa-7x"></i>
                     </div>
                 }
                 {this.state.gapiInitDone &&
@@ -176,6 +177,10 @@ export class Routed extends Component<Props, State> {
                         <Switch>
                             <Route path="/login">
                                 <Login createAlert={this.createAlert} />
+                            </Route>
+
+                            <Route path="/schedule">
+                                <Schedule createAlert={this.createAlert} />
                             </Route>
 
                             <Route path="/calendar">
