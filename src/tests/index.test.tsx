@@ -15,50 +15,77 @@
 // You should have received a copy of the GNU General Public License
 // along with Lapislar.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { render } from '@testing-library/react';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import LanguageContainer from '../translations/LanguageContainer';
-import { CookiesProvider } from 'react-cookie';
 import { act as domAct } from "react-dom/test-utils";
-import { act as testAct, create } from "react-test-renderer";
 import config from '../helper/config'
-import ReactDOM, { unmountComponentAtNode } from 'react-dom';
+import { unmountComponentAtNode } from 'react-dom';
+import AlertProvider from '../Components/Functional/AlertProvider';
+import * as Alerts from '../helper/AlertTypes';
+import Routed from '../Components/Functional/Routed';
 
 firebase.initializeApp(config);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
 
 let container: HTMLDivElement | null = null;
-let script: HTMLScriptElement | null = null;
+
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
-  script = document.createElement("script");
-  script.src = "https://apis.google.com/js/api.js";
-  script.type = "text/javascript";
-  document.head.appendChild(script);
 });
 
 afterEach(() => {
   // cleanup on exiting
   unmountComponentAtNode(container);
   container?.remove();
-  script?.remove();
-  script = null;
   container = null;
 });
 
-test('Renders the Language Container', () => {
-  //const { getByText } = render(<LanguageContainer />);
-  //const linkElement = getByText(/learn react/i);
-  //expect(linkElement).toBeInTheDocument();
+test('Renders the App without GAPI', () => {
+  const okToCall = jest.fn();
+
   domAct(() => {
-    ReactDOM.render(
+    render(
       <React.StrictMode>
-        <LanguageContainer />
-      </React.StrictMode>,
-      container);
+        <LanguageContainer>
+          <AlertProvider>
+            <Routed changeLanguage={okToCall} currentLocale={"en"} createAlert={okToCall} />
+          </AlertProvider>
+        </LanguageContainer>
+      </React.StrictMode>);
   });
+});
+
+test("Renders the Router and looks for Alerts", () => {
+  const neverCallThis = jest.fn();
+  const alertFN = (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => {
+    if (type instanceof Alerts.Warning || type instanceof Alerts.Error) {
+      neverCallThis();
+    }
+    else if (typeof type === "number") {
+      if (type === 3 || type === 2) {
+        neverCallThis();
+      }
+    }
+    else {
+      if (type === "error" || type === "warning") {
+        neverCallThis();
+      }
+    }
+  }
+
+  const okToCall = jest.fn();
+
+  domAct(() => {
+    render(
+      <LanguageContainer>
+        <Routed changeLanguage={okToCall} currentLocale={"en"} createAlert={alertFN} />
+      </LanguageContainer>
+    );
+  });
+  expect(neverCallThis).not.toBeCalled();
 });
