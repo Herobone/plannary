@@ -53,7 +53,7 @@ class Home extends React.Component<Props> {
     }
 
     return (
-      <OnlyAuthed className="w3-container w3-content Home app-content" >
+      <OnlyAuthed className="w3-container Home app-content" >
         {
           currentUser &&
           <div className="w3-row-padding">

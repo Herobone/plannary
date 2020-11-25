@@ -79,7 +79,6 @@ export default class GAPIContainer extends Component<Props, State> {
                         <i className="w3-center fas fa-spinner fa-spin fa-7x"></i>
                     </div>
                 }
-                {!this.state.isSignedIn && <div>Alter was los</div>}
                 {this.state.gapiInitDone &&
                     this.props.children}
             </div>
