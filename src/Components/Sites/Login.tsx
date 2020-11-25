@@ -10,11 +10,18 @@ interface Props {
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
 }
 
-export class Login extends Component<Props> {
+interface State {
+    isSignedIn: boolean;
+}
+
+export class Login extends Component<Props, State> {
 
     nameInputRef!: React.RefObject<HTMLInputElement>;
+    unregisterAuthObserver!: firebase.Unsubscribe;
 
-
+    state = {
+        isSignedIn: false
+    }
 
     // Configure FirebaseUI.
     uiConfig = {
@@ -37,6 +44,7 @@ export class Login extends Component<Props> {
             },
             signInFailure: (error: firebaseui.auth.AuthUIError) => {
                 this.props.createAlert(3, error.message);
+                console.warn(error.message);
                 return new Promise<void>((resolve, reject) => {
                     resolve();
                 })
@@ -50,7 +58,18 @@ export class Login extends Component<Props> {
         this.setName = this.setName.bind(this);
     }
 
+    componentDidMount() {
+        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+            (user) => {
+                this.setState({ isSignedIn: !!user });
+            }
+        );
+    }
 
+    // Make sure we un-register Firebase observers when the component unmounts.
+    componentWillUnmount() {
+        this.unregisterAuthObserver();
+    }
 
     setName() {
         const currentUser = firebase.auth().currentUser,

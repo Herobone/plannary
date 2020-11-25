@@ -9,6 +9,7 @@ interface Props {
 }
 interface State {
     gapiInitDone: boolean;
+    isSignedIn: boolean;
 }
 
 export default class GAPIContainer extends Component<Props, State> {
@@ -16,7 +17,8 @@ export default class GAPIContainer extends Component<Props, State> {
     unregisterAuthObserver!: firebase.Unsubscribe;
 
     state = {
-        gapiInitDone: false
+        gapiInitDone: false,
+        isSignedIn: false
     }
 
     constructor(props: Props) {
@@ -27,16 +29,6 @@ export default class GAPIContainer extends Component<Props, State> {
 
     componentDidMount() {
         gapi.load("client:auth2", this.initGAPI);
-        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-            (user) => {
-                
-            }
-        );
-    }
-
-    // Make sure we un-register Firebase observers when the component unmounts.
-    componentWillUnmount() {
-        this.unregisterAuthObserver();
     }
 
     initGAPI() {
@@ -87,6 +79,7 @@ export default class GAPIContainer extends Component<Props, State> {
                         <i className="w3-center fas fa-spinner fa-spin fa-7x"></i>
                     </div>
                 }
+                {!this.state.isSignedIn && <div>Alter was los</div>}
                 {this.state.gapiInitDone &&
                     this.props.children}
             </div>
