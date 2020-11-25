@@ -1,6 +1,7 @@
 {
 	"account.actions.login": "Log In",
 	"account.actions.logout": "Log Out",
+	"account.actions.login.withGoogle": "Log In with Google",
 	"account.actions.noname": "Please provide a valid name!",
 	"account.descriptors.finishsignup": "Please finish signing up!",
 	"account.descriptors.myaccount": "My Account",

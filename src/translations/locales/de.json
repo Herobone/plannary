@@ -1,6 +1,7 @@
 {
 	"account.actions.login": "Anmelden",
 	"account.actions.logout": "Abmelden",
+	"account.actions.login.withGoogle": "Mit Google Anmelden",
 	"account.actions.noname": "Bitte gib einen richtigen Namen an!",
 	"account.descriptors.finishsignup": "Bitte beende deine Anmeldung!",
 	"account.descriptors.myaccount": "Mein Profil",

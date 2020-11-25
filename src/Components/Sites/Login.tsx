@@ -5,7 +5,6 @@ import { StyledFirebaseAuth } from 'react-firebaseui';
 import { Redirect } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import * as Alerts from "../../helper/AlertTypes";
-import config from '../../helper/config'
 
 interface Props {
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
@@ -23,10 +22,6 @@ export class Login extends Component<Props> {
         signInFlow: 'redirect',
         // We will display Google and Facebook as auth providers.
         signInOptions: [
-            {
-                provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                scopes: config.scopes
-            },
             firebase.auth.GithubAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
             firebase.auth.PhoneAuthProvider.PROVIDER_ID
@@ -39,6 +34,12 @@ export class Login extends Component<Props> {
                     console.log("GToken " + result.credential.accessToken)
                 }
                 return false;
+            },
+            signInFailure: (error: firebaseui.auth.AuthUIError) => {
+                this.props.createAlert(3, error.message);
+                return new Promise<void>((resolve, reject) => {
+                    resolve();
+                })
             }
         }
     };
@@ -49,7 +50,7 @@ export class Login extends Component<Props> {
         this.setName = this.setName.bind(this);
     }
 
-    
+
 
     setName() {
         const currentUser = firebase.auth().currentUser,
@@ -73,17 +74,30 @@ export class Login extends Component<Props> {
         const currentUser = firebase.auth().currentUser;
         return (
             <div className="login-page">
-                <h1 className="w3-center">
-                    <FormattedMessage id="general.welcome" />!
-                    <br />
-                </h1>
-                <h3 className="w3-center">
-                    <FormattedMessage id="account.descriptors.signinneeded" />
-                </h3>
-
                 {
                     !currentUser &&
-                    <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+                    <div>
+                        <h1 className="w3-center">
+                            <FormattedMessage id="general.welcome" />!
+                    <br />
+                        </h1>
+                        <h3 className="w3-center">
+                            <FormattedMessage id="account.descriptors.signinneeded" />
+                        </h3>
+                        <div className="w3-center">
+                            <button
+                                className="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-google firebaseui-id-idp-button"
+                                onClick={() => gapi.auth2.getAuthInstance().signIn()}>
+                                <span className="firebaseui-idp-icon-wrapper">
+                                    <img className="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
+                                </span>
+                                <div className="firebaseui-idp-text firebaseui-idp-text-long">
+                                    <FormattedMessage id="account.actions.login.withGoogle" />
+                                </div>
+                            </button>
+                        </div>
+                        <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+                    </div>
                 }
                 {
                     currentUser &&
@@ -120,7 +134,7 @@ export class Login extends Component<Props> {
                         }
                     </div>
                 }
-            </div>
+            </div >
         )
     }
 }

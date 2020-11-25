@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom';
 import ContextMenu from '../Visuals/ContextMenu';
 import OnlyAuthed from '../Functional/OnlyAuthed';
 import * as Alerts from '../../helper/AlertTypes';
+import * as gapiHelpers from '../../helper/gapiHelpers'
 
 interface Props {
     changeLanguage: (locale: string) => void;
     currentLocale: string;
-    user: firebase.User | null;
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
 }
 
@@ -38,7 +38,9 @@ export class Settings extends Component<Props> {
             "de": "Deutsch",
             "en": "English"
         };
-        const currentUser = this.props.user;
+        
+        const currentUser = firebase.auth().currentUser;
+
         let userName = "Logged Out";
         if (currentUser && currentUser.displayName) {
             userName = currentUser.displayName;
@@ -53,7 +55,7 @@ export class Settings extends Component<Props> {
                     <Dropdown callback={this.props.changeLanguage} content={options} selected={this.props.currentLocale} />
                     <hr />
                     <br />
-                    <Link to="/login" className="w3-bar-item w3-button w3-red" onClick={() => { firebase.auth().signOut(); window.location.reload(false); }}>
+                    <Link to="/login" className="w3-bar-item w3-button w3-red" onClick={() => { firebase.auth().signOut(); gapiHelpers.signOutGAPI(); }}>
                         <FormattedMessage id="account.actions.logout" />
                     </Link>
                     <ContextMenu content={this.prepareContextMenu()} callback={(lol: number) => console.log(lol)} />
