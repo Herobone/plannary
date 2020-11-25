@@ -18,14 +18,13 @@
 import React, { ReactElement } from 'react';
 import '../../css/App.css';
 import Column from "../Visuals/Column"
-import { Link, Redirect } from 'react-router-dom';
+import * as firebase from 'firebase/app';
 import { FormattedMessage } from 'react-intl';
 import * as Alerts from '../../helper/AlertTypes';
 import ContextMenu from '../Visuals/ContextMenu';
 import OnlyAuthed from '../Functional/OnlyAuthed';
 
 interface Props {
-  user: firebase.User | null;
   createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
 }
 
@@ -43,7 +42,7 @@ class Home extends React.Component<Props> {
   }
 
   render() {
-    const currentUser = this.props.user;
+    const currentUser = firebase.auth().currentUser;
     let profilePicture = "";
     if (currentUser && currentUser.photoURL) {
       profilePicture = currentUser.photoURL;

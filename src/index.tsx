@@ -17,20 +17,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/index.css';
-import LanguageContainer from './translations/LanguageContainer';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import config from './helper/config'
+import App from './App';
 
 firebase.initializeApp(config);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 ReactDOM.render(
-  <React.StrictMode>
-        <LanguageContainer />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 

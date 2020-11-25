@@ -13,7 +13,6 @@ import * as gapiHelpers from '../../helper/gapiHelpers'
 interface Props {
     changeLanguage: (locale: string) => void;
     currentLocale: string;
-    user: firebase.User | null;
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
 }
 
@@ -39,7 +38,9 @@ export class Settings extends Component<Props> {
             "de": "Deutsch",
             "en": "English"
         };
-        const currentUser = this.props.user;
+        
+        const currentUser = firebase.auth().currentUser;
+
         let userName = "Logged Out";
         if (currentUser && currentUser.displayName) {
             userName = currentUser.displayName;

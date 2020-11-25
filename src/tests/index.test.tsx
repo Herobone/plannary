@@ -21,18 +21,44 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import LanguageContainer from '../translations/LanguageContainer';
 import { CookiesProvider } from 'react-cookie';
+import { act as domAct } from "react-dom/test-utils";
+import { act as testAct, create } from "react-test-renderer";
 import config from '../helper/config'
+import ReactDOM, { unmountComponentAtNode } from 'react-dom';
 
 firebase.initializeApp(config);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+
+let container: HTMLDivElement | null = null;
+let script: HTMLScriptElement | null = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  document.body.appendChild(container);
+  script = document.createElement("script");
+  script.src = "https://apis.google.com/js/api.js";
+  script.type = "text/javascript";
+  document.head.appendChild(script);
+});
+
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container?.remove();
+  script?.remove();
+  script = null;
+  container = null;
+});
 
 test('Renders the Language Container', () => {
   //const { getByText } = render(<LanguageContainer />);
   //const linkElement = getByText(/learn react/i);
   //expect(linkElement).toBeInTheDocument();
-  render(
-    <React.StrictMode>
-          <LanguageContainer />
-    </React.StrictMode>
-  );
+  domAct(() => {
+    ReactDOM.render(
+      <React.StrictMode>
+        <LanguageContainer />
+      </React.StrictMode>,
+      container);
+  });
 });
