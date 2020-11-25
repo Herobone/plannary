@@ -7,6 +7,7 @@
 	"account.descriptors.myaccount": "Mein Profil",
 	"account.descriptors.notsignedin": "Um diese Funktion nutzen zu können, melde dich bitte an!",
 	"account.descriptors.signinneeded": "Um fortzufahren, musst du dich zuerst anmelden!",
+	"account.descriptions.signout.success": "Abmelden Erfolgreich!",
 	"account.descriptors.yourname": "Dein Name",
 	"account.navigation.settings": "Einstellungen",
 	"elements.alerts.error": "Fehler",

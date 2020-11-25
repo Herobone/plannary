@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import ContextMenu from '../Visuals/ContextMenu';
 import OnlyAuthed from '../Functional/OnlyAuthed';
 import * as Alerts from '../../helper/AlertTypes';
-import * as gapiHelpers from '../../helper/gapiHelpers'
+import * as gapiHelpers from '../../helper/gapiHelpers';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -46,7 +46,7 @@ export class Settings extends Component<Props> {
             userName = currentUser.displayName;
         }
         return (
-            <OnlyAuthed className="w3-container w3-content app-content" >
+            <OnlyAuthed className="w3-container w3-content app-content">
                 <Column additionalClasses="app-content">
                     <h1><FormattedMessage id="account.navigation.settings" /></h1>
                     <h3>Hi {userName}!</h3>
@@ -55,7 +55,7 @@ export class Settings extends Component<Props> {
                     <Dropdown callback={this.props.changeLanguage} content={options} selected={this.props.currentLocale} />
                     <hr />
                     <br />
-                    <Link to="/login" className="w3-bar-item w3-button w3-red" onClick={() => { firebase.auth().signOut(); gapiHelpers.signOutGAPI(); }}>
+                    <Link to="/logout" className="w3-bar-item w3-button w3-red">
                         <FormattedMessage id="account.actions.logout" />
                     </Link>
                     <ContextMenu content={this.prepareContextMenu()} callback={(lol: number) => console.log(lol)} />

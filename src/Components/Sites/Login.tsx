@@ -36,10 +36,6 @@ export class Login extends Component<Props, State> {
         callbacks: {
             // Avoid redirects after sign-in.
             signInSuccessWithAuthResult: (result: any) => {
-                console.log("Hi");
-                if (result.credential.accessToken) {
-                    console.log("GToken " + result.credential.accessToken)
-                }
                 return false;
             },
             signInFailure: (error: firebaseui.auth.AuthUIError) => {

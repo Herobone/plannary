@@ -63,6 +63,8 @@ export class Naviagation extends Component<NaviagationProps, NaviagationState> {
                     </Link>
                     <Link to="/calendar" className="sidebar-element far fa-calendar-alt">
                     </Link>
+                    <Link to="/schedule" className="sidebar-element far fa-clock">
+                    </Link>
                     <div className="user-section-sidebar">
                         <div className="inner-user-sidebar">
                             <Link to="/settings" className="user-settings-sidebar" title="Account">
@@ -102,9 +104,9 @@ export class Naviagation extends Component<NaviagationProps, NaviagationState> {
                             <Link to="/settings" className="w3-bar-item w3-button w3-padding-large" onClick={this.closeNav}>
                                 <FormattedMessage id="navigation.myprofile" />
                             </Link>
-                            <button className="w3-bar-item w3-button w3-red w3-padding-large" onClick={() => { this.closeNav(); firebase.auth().signOut() }}>
+                            <Link to="/logout" className="w3-bar-item w3-button w3-red w3-padding-large" onClick={this.closeNav}>
                                 <FormattedMessage id="account.actions.logout" />
-                            </button>
+                            </Link>
                         </div>
                     }
                     {

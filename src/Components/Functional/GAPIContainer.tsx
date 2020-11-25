@@ -61,9 +61,8 @@ export default class GAPIContainer extends Component<Props, State> {
                 );
                 firebase.auth().signInWithCredential(credential);
             } else {
-                console.log("User was signed out!");
-                firebase.auth().signOut();
-                this.props.createAlert(1, "Signed Out!");
+                window.location.pathname = "/logout";
+                window.location.reload();
             }
         });
     }

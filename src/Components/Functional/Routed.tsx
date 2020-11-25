@@ -10,6 +10,7 @@ import * as Alerts from '../../helper/AlertTypes';
 import Login from '../Sites/Login';
 import Calender from '../Sites/Calender';
 import Schedule from '../Sites/Schedule';
+import Logout from './Logout';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -37,6 +38,10 @@ export class Routed extends Component<Props, State> {
                 <Switch>
                     <Route path="/login">
                         <Login createAlert={this.props.createAlert} />
+                    </Route>
+
+                    <Route path="/logout">
+                        <Logout createAlert={this.props.createAlert} />
                     </Route>
 
                     <Route path="/schedule">
