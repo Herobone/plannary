@@ -63,7 +63,7 @@ export class Naviagation extends Component<NaviagationProps, NaviagationState> {
                     </Link>
                     <Link to="/calendar" className="sidebar-element far fa-calendar-alt">
                     </Link>
-                    <Link to="/schedule" className="sidebar-element far fa-clock">
+                    <Link to="/schedule" className="sidebar-element schedule-icon">
                     </Link>
                     <div className="user-section-sidebar">
                         <div className="inner-user-sidebar">

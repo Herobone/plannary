@@ -146,11 +146,17 @@ table.schedule-table {
   display: block;
   color: #fff;
   outline: 0 none;
+  transition: color .3s ease-in-out, opacity .3s ease-in-out;
 }
 
 .sidebar-element.far {
   margin: 16px 16px;
   font-size: 36px;
+}
+
+.sidebar-element:hover {
+  opacity: .5;
+  color: #ff9898;
 }
 
 .sidebar-element.far:first-child {
@@ -159,6 +165,12 @@ table.schedule-table {
 
 .hb-context-menu {
   max-width: 30vw;
+}
+
+/* far fa-clock*/
+.schedule-icon:before,
+[data-icon=schedule]:before {
+ content:""
 }
 
 .app-content {

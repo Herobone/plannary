@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import ContextMenu from '../Visuals/ContextMenu';
 import OnlyAuthed from '../Functional/OnlyAuthed';
 import * as Alerts from '../../helper/AlertTypes';
-import * as gapiHelpers from '../../helper/gapiHelpers';
 
 interface Props {
     changeLanguage: (locale: string) => void;
