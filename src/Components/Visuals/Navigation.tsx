@@ -1,20 +1,19 @@
 import "../../css/App.css"
 import React, { Component } from 'react'
 import Mascot from "../../media/MascottAlpha.png"
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-interface NaviagationProps {
+interface NavigationProps {
     user: firebase.User | null
 }
 
-interface NaviagationState {
+interface NavigationState {
 
 }
 
-export class Naviagation extends Component<NaviagationProps, NaviagationState> {
+export class Navigation extends Component<NavigationProps, NavigationState> {
 
     mobileNavRef: React.RefObject<HTMLDivElement>;
 
@@ -81,7 +80,7 @@ export class Naviagation extends Component<NaviagationProps, NaviagationState> {
                         className="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-left w3-padding-large w3-hover-white w3-theme-d2 w3-large"
                         onClick={this.toggleNav}
                     >
-                        <i className="fa fa-bars"></i>
+                        <i className="fa fa-bars" />
                     </button>
                 </div>
                 <div
@@ -121,4 +120,4 @@ export class Naviagation extends Component<NaviagationProps, NaviagationState> {
     }
 }
 
-export default Naviagation
+export default Navigation

@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import React, { Component, ReactElement } from 'react';
 import { Redirect } from 'react-router';
 import * as gapiHelpers from '../../helper/gapiHelpers';

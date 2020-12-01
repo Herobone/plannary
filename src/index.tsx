@@ -18,13 +18,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 import config from './helper/config'
 import App from './App';
 
 firebase.initializeApp(config);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+if (window.location.hostname === "localhost") {
+    firebase.firestore().useEmulator("localhost", 8080);
+}
 
 ReactDOM.render(
   <App />,

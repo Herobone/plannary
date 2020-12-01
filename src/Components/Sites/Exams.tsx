@@ -1,5 +1,4 @@
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from 'firebase';
 import React, { Component, ReactElement, RefObject } from 'react';
 import { FormattedMessage } from 'react-intl';
 import * as Alerts from '../../helper/AlertTypes';

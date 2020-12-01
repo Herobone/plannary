@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app';
+import firebase from 'firebase';
 
 export interface IExam {
     id: string;
@@ -40,8 +40,7 @@ export const examConverter = {
             date: firebase.firestore.Timestamp.fromDate(exam.date)
         }
 
-        if (exam.info &&
-            exam.info !== undefined) {
+        if (exam.info) {
             serialized = {
                 classID: exam.classID,
                 date: firebase.firestore.Timestamp.fromDate(exam.date),
@@ -49,8 +48,7 @@ export const examConverter = {
             }
         }
 
-        if (exam.lessonNumber &&
-            exam.lessonNumber !== undefined) {
+        if (exam.lessonNumber) {
             serialized = {
                 classID: exam.classID,
                 date: firebase.firestore.Timestamp.fromDate(exam.date),
@@ -59,9 +57,7 @@ export const examConverter = {
         }
 
         if (exam.lessonNumber &&
-            exam.lessonNumber !== undefined &&
-            exam.info &&
-            exam.info !== undefined) {
+            exam.info) {
             serialized = {
                 classID: exam.classID,
                 date: firebase.firestore.Timestamp.fromDate(exam.date),
@@ -77,20 +73,16 @@ export const examConverter = {
     ): Exam {
         const data = snapshot.data(options)!;
         let exam: Exam = new Exam(data.id, data.classID, data.date.toDate());
-        if (data.info &&
-            data.info !== undefined) {
+        if (data.info) {
             exam = new Exam(data.id, data.classID, data.date.toDate(), data.info);
         }
 
-        if (data.lessonNumber &&
-            data.lessonNumber !== undefined) {
+        if (data.lessonNumber) {
             exam = new Exam(data.id, data.classID, data.date.toDate(), undefined, data.lessonNumber);
         }
 
         if (data.lessonNumber &&
-            data.lessonNumber !== undefined &&
-            data.info &&
-            data.info !== undefined) {
+            data.info) {
             exam = new Exam(data.id, data.classID, data.date.toDate(), data.info, data.lessonNumber);
         }
         return exam;

@@ -18,7 +18,7 @@
 import React, { ReactElement } from 'react';
 import '../../css/App.css';
 import Column from "../Visuals/Column"
-import * as firebase from 'firebase/app';
+import firebase from 'firebase';
 import { FormattedMessage } from 'react-intl';
 import * as Alerts from '../../helper/AlertTypes';
 import ContextMenu from '../Visuals/ContextMenu';

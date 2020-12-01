@@ -1,8 +1,7 @@
 import React, { Component, ReactElement } from 'react'
 import Column from '../Visuals/Column';
 import Dropdown from '../Visuals/Dropdown';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import ContextMenu from '../Visuals/ContextMenu';

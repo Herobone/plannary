@@ -17,8 +17,7 @@
 
 import React, { ReactElement } from 'react';
 import { render } from '@testing-library/react';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 import LanguageContainer from '../translations/LanguageContainer';
 import { act as domAct } from "react-dom/test-utils";
 import config from '../helper/config'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Naviagation from '../Visuals/Navigation'
+import Navigation from '../Visuals/Navigation'
 import firebase from 'firebase';
 import { Redirect } from 'react-router';
 
@@ -20,7 +20,7 @@ export default class OnlyAuthed extends Component<Props, State> {
             <div>
                 {currentUser &&
                     <div className="only-authed">
-                        <Naviagation user={currentUser} />
+                        <Navigation user={currentUser} />
                         <div className={this.props.className}>
                             {this.props.children}
                         </div>

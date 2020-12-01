@@ -1,6 +1,5 @@
 import React, { Component, ReactElement } from 'react'
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import { Redirect } from 'react-router';
 import { FormattedMessage } from 'react-intl';

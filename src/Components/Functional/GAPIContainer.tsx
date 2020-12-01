@@ -1,8 +1,7 @@
 import React, { Component, ReactElement } from 'react'
 import * as Alerts from '../../helper/AlertTypes';
 import config from '../../helper/config';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase';
 
 interface Props {
     createAlert: (type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) => void;
@@ -75,7 +74,7 @@ export default class GAPIContainer extends Component<Props, State> {
                     <div className="w3-display-middle w3-xlarge">
                         <span className="w3-center w3-padding-large">Loading</span>
                         <br />
-                        <i className="w3-center fas fa-spinner fa-spin fa-7x"></i>
+                        <i className="w3-center fas fa-spinner fa-spin fa-7x" />
                     </div>
                 }
                 {this.state.gapiInitDone &&
