@@ -26,6 +26,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-test-renderer": "^17.0.0",
     "firebase": "^7.24.0",
+    "firebase-tools": "^8.16.2",
     "globalize": "^1.6.0",
     "googleapis": "^65.0.0",
     "jquery": "^3.5.1",

@@ -11,6 +11,7 @@ import Login from '../Sites/Login';
 import Calender from '../Sites/Calender';
 import Schedule from '../Sites/Schedule';
 import Logout from './Logout';
+import Exams from '../Sites/Exams';
 
 interface Props {
     changeLanguage: (locale: string) => void;
@@ -46,6 +47,10 @@ export class Routed extends Component<Props, State> {
 
                     <Route path="/schedule">
                         <Schedule createAlert={this.props.createAlert} />
+                    </Route>
+
+                    <Route path="/exams">
+                        <Exams createAlert={this.props.createAlert} />
                     </Route>
 
                     <Route path="/calendar">

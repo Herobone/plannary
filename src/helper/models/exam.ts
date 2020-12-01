@@ -31,13 +31,11 @@ export class Exam implements IExam {
 export const examConverter = {
     toFirestore(exam: Exam): firebase.firestore.DocumentData {
         let serialized: {
-            id: string,
             classID: string,
             date: firebase.firestore.Timestamp,
             lessonNumber?: number;
             info?: string;
         } = {
-            id: exam.id,
             classID: exam.classID,
             date: firebase.firestore.Timestamp.fromDate(exam.date)
         }
@@ -45,7 +43,6 @@ export const examConverter = {
         if (exam.info &&
             exam.info !== undefined) {
             serialized = {
-                id: exam.id,
                 classID: exam.classID,
                 date: firebase.firestore.Timestamp.fromDate(exam.date),
                 info: exam.info
@@ -55,7 +52,6 @@ export const examConverter = {
         if (exam.lessonNumber &&
             exam.lessonNumber !== undefined) {
             serialized = {
-                id: exam.id,
                 classID: exam.classID,
                 date: firebase.firestore.Timestamp.fromDate(exam.date),
                 lessonNumber: exam.lessonNumber
@@ -67,7 +63,6 @@ export const examConverter = {
             exam.info &&
             exam.info !== undefined) {
             serialized = {
-                id: exam.id,
                 classID: exam.classID,
                 date: firebase.firestore.Timestamp.fromDate(exam.date),
                 info: exam.info,
