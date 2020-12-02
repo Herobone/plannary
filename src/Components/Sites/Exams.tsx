@@ -28,6 +28,7 @@ export default class Exams extends Component<Props, State> {
         this.examInfoRef = React.createRef();
 
         this.handleExamSubmit = this.handleExamSubmit.bind(this);
+        this.getAllExams = this.getAllExams.bind(this);
     }
 
     handleExamSubmit() {
@@ -44,16 +45,36 @@ export default class Exams extends Component<Props, State> {
         }
 
         if (!currentExamDate.valueAsDate) {
+            console.warn("No date!!");
             return;
         }
         const currentUser = firebase.auth().currentUser;
         if (!currentUser) {
+            console.warn("No current user!!!");
             return;
         }
         const examDocRef = firebase.firestore().collection("userData").doc(currentUser.uid).collection("exams").doc().withConverter(examConverter);
         const exam = new Exam(examDocRef.id, currentClassID.value, currentExamDate.valueAsDate);
-        examDocRef.set(exam);
+        examDocRef.set(exam).then(() => {
+            console.log("Success");
+        }).catch(() => {
+            console.error("Error");
+        });
 
+    }
+
+    getAllExams() {
+        const currentUser = firebase.auth().currentUser;
+        if (!currentUser) {
+            console.warn("No current user!!!");
+            return;
+        }
+        firebase.firestore().collection("userData").doc(currentUser.uid).collection("exams").get().then((querySnapshot) => {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+            });
+        });
     }
 
     render() {
@@ -72,6 +93,11 @@ export default class Exams extends Component<Props, State> {
                 <textarea id="examInfo" name="examInfo" rows={4} cols={50} ref={this.examInfoRef} />
                 <br />
                 <button onClick={this.handleExamSubmit} >
+                    <FormattedMessage id="general.add" />
+                </button>
+
+                <br />
+                <button onClick={this.getAllExams} >
                     <FormattedMessage id="general.add" />
                 </button>
             </OnlyAuthed>
