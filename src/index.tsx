@@ -26,6 +26,7 @@ firebase.initializeApp(config);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 if (window.location.hostname === "localhost") {
     firebase.firestore().useEmulator("localhost", 8080);
+    firebase.auth().useEmulator("http://localhost:9099");
 }
 
 ReactDOM.render(
