@@ -1,10 +1,11 @@
-import React, { Component, ReactElement } from 'react';
-import * as Alerts from '../../helper/AlertTypes';
+import React, {Component, ReactElement} from 'react';
+import Alerts, {Alert as IAlert} from '../../helper/AlertTypes';
 import Alert from '../../Components/Visuals/Alert';
 
 interface Props {
 
 }
+
 interface State {
     errorToDisplay: Map<number, ReactElement>;
     lastIndex: number;
@@ -21,55 +22,60 @@ export default class AlertProvider extends Component<Props, State> {
         this.createAlert = this.createAlert.bind(this);
     }
 
+    instanceOfAlert(object: string | number | IAlert): object is IAlert {
+        if (typeof object === "number" || typeof object === "string") {
+            return false;
+        }
+        return 'defaultHeader' in object && 'color' in object;
+    }
 
-    createAlert(type: Alerts.Alert | number | string, message: string | ReactElement, header?: ReactElement | null) {
 
-        let alertType!: Alerts.Alert;
+    createAlert(type: IAlert | number | string, message: string | ReactElement, header?: ReactElement | null) {
 
-        if (type instanceof Alerts.Alert) {
+        let alertType!: IAlert;
+
+        if (this.instanceOfAlert(type)) {
             alertType = type;
-        }
-        else if (typeof type === "number") {
+        } else if (typeof type === "number") {
             if (type === 3) {
-                alertType = new Alerts.Error()
+                alertType = Alerts.ERROR;
             } else if (type === 2) {
-                alertType = new Alerts.Warning()
+                alertType = Alerts.WARNING;
             } else if (type === 1) {
-                alertType = new Alerts.Success()
+                alertType = Alerts.SUCCESS;
             } else {
-                alertType = new Alerts.Info()
+                alertType = Alerts.INFO;
             }
-        }
-        else {
+        } else {
             if (type === "error") {
-                alertType = new Alerts.Error()
+                alertType = Alerts.ERROR;
             } else if (type === "warning") {
-                alertType = new Alerts.Warning()
+                alertType = Alerts.WARNING;
             } else if (type === "success") {
-                alertType = new Alerts.Success()
+                alertType = Alerts.SUCCESS;
             } else {
-                alertType = new Alerts.Info()
+                alertType = Alerts.INFO;
             }
         }
 
-        const { errorToDisplay, lastIndex } = this.state;
+        const {errorToDisplay, lastIndex} = this.state;
         const alertIndex = lastIndex + 1;
         const al = (
             <Alert key={"alert" + alertIndex} type={alertType} header={header} clear={() => {
-                const { errorToDisplay } = this.state;
+                const {errorToDisplay} = this.state;
                 errorToDisplay.delete(alertIndex);
-                this.setState({ errorToDisplay: errorToDisplay });
+                this.setState({errorToDisplay: errorToDisplay});
             }}>
                 {message}
             </Alert>
         )
         errorToDisplay.set(alertIndex, al);
-        this.setState({ errorToDisplay: errorToDisplay, lastIndex: alertIndex })
+        this.setState({errorToDisplay: errorToDisplay, lastIndex: alertIndex})
     }
 
     prepareAlerts(): ReactElement[] {
         let vals: ReactElement[] = [];
-        const fn = (val: ReactElement, k: number, m: Map<number, ReactElement>) => {
+        const fn = (val: ReactElement) => {
             vals.push(val)
         }
         this.state.errorToDisplay.forEach(fn);
