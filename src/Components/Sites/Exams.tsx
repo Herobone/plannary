@@ -98,7 +98,20 @@ export default class Exams extends Component<Props, State> {
 
                 <br />
                 <button onClick={this.getAllExams} >
-                    <FormattedMessage id="general.add" />
+                    Log all
+                </button>
+
+                <button onClick={() => {
+                    firebase.firestore().collection("userData").doc("testUser").collection("exams").get().then((querySnapshot) => {
+                        querySnapshot.forEach(function(doc) {
+                            // doc.data() is never undefined for query doc snapshots
+                            console.log(doc.id, " => ", doc.data());
+                        });
+                    }).catch((reason: any) => {
+                        console.warn("There was an error. This should happen! " + reason);
+                    });
+                }} >
+                    SHOULD FAIL
                 </button>
             </OnlyAuthed>
         )
