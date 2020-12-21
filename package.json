@@ -13,7 +13,7 @@
     "@testing-library/user-event": "^12.6.0",
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.52",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^26.0.19",
     "@types/jquery": "^3.5.4",
     "@types/md5": "^2.2.1",
     "@types/mocha": "^8.0.4",
